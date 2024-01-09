@@ -1,0 +1,6 @@
+Field Scouting Application 2024
+
+Color Palette:
+	Background: #DCDCDC
+	Secondary Background: #FFFFFF
+	Accent: #008445
