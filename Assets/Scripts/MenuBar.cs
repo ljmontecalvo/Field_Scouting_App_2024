@@ -3,71 +3,79 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.SceneManagement;
 
 public class MenuBar : MonoBehaviour
 {
     public GameObject[] screens;
-    
     public Slider menuBarSlider;
-    public float menuBarSlideSpeed = 0.5f;
-    public float menuBarSlideDelay = 0.1f;
-    
     public Animator anim;
+
+    public int sliderSpeed = 1;
+    private int position = 200;
+
+    private bool move = false;
 
     private void Start()
     {
-        StartCoroutine(Cycle());
+        StartCoroutine(MenuBarTimeout());
     }
 
-    public void BluetoothButton() {
-        StartCoroutine(MenuBarAnimation(1));
-        ChangeScreen(1);
-    }
-    
-    public void ScoutButton() {
-        StartCoroutine(MenuBarAnimation(2));
-        ChangeScreen(2);
+    public void BluetoothButton()
+    {
+        move = true;
+        position = 100;
     }
 
-    public void EditButton() {
-        StartCoroutine(MenuBarAnimation(3));
-        ChangeScreen(3);
+    public void ScoutButton()
+    {
+        move = true;
+        position = 200;
+    }
+
+    public void EditButton()
+    {
+        move = true;
+        position = 300;
     }
 
     public void MaximizeButton()
     {
-        StartCoroutine(Cycle());
+        StartCoroutine(MenuBarTimeout());
     }
 
-    public void ChangeScreen(int screen)
+    private void MoveSlider(int position)
     {
-        for (var i = 0; i < screens.Length; i++)
+        if (!move) return;
+        if (menuBarSlider.value < position)
         {
-            screens[i].SetActive(i + 1 == screen);
+            menuBarSlider.value += sliderSpeed;
+        } 
+        else if (menuBarSlider.value > position)
+        {
+            menuBarSlider.value -= sliderSpeed;
+        }
+        else
+        {
+            move = false;
+
+            for (var i = 0; i < screens.Length; i++)
+            {
+                screens[i].SetActive((i + 1) * 100 == position);
+            }
         }
     }
     
-    private IEnumerator MenuBarAnimation(int position) {
-        if (menuBarSlider.value > position) {
-            while (menuBarSlider.value > position) {
-                menuBarSlider.value -= menuBarSlideSpeed;
-                yield return new WaitForSeconds(menuBarSlideDelay);
-            }
-        } else if (menuBarSlider.value < position)
-        {
-            while (menuBarSlider.value < position)
-            {
-                menuBarSlider.value += menuBarSlideSpeed;
-                yield return new WaitForSeconds(menuBarSlideDelay);
-            }
-        }
+    private void FixedUpdate()
+    {
+        MoveSlider(position);
     }
 
-    private IEnumerator Cycle()
+    private IEnumerator MenuBarTimeout()
     {
         anim.Play("Menu Bar Up");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         anim.Play("Menu Bar Down");
     }
 }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 60c3effc8f7ffb943ad5247d269fd6b7
+guid: d710858c4bea68a44859a27cfb59c4c8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7263049845353657692
-    second: airstrikeLogoStylized_0
+      213: 7025651857757288288
+    second: Artboard 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: airstrikeLogoStylized_0
+      name: Artboard 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 600
-        height: 600
+        width: 1331
+        height: 1331
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4aa4dbd95a6743b90800000000000000
-      internalID: -7263049845353657692
+      spriteID: 067bf212421208160800000000000000
+      internalID: 7025651857757288288
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      airstrikeLogoStylized_0: -7263049845353657692
+      Artboard 1_0: 7025651857757288288
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
