@@ -7,33 +7,45 @@ using UnityEngine.SceneManagement;
 
 public class MenuBar : MonoBehaviour
 {
+    public GameObject[] screens;
+    
     public Slider menuBarSlider;
     public float menuBarSlideSpeed = 0.5f;
     public float menuBarSlideDelay = 0.1f;
-
-    public GameObject[] screens;
+    
     public Animator anim;
 
     private void Start()
     {
-        StartCoroutine(MinimizeCycle());
-    }
-
-    public void ScoutButton() {
-        StartCoroutine(MenuBarAnimation(2));
-    }
-
-    public void EditButton() {
-        StartCoroutine(MenuBarAnimation(3));
+        StartCoroutine(Cycle());
     }
 
     public void BluetoothButton() {
         StartCoroutine(MenuBarAnimation(1));
+        ChangeScreen(1);
+    }
+    
+    public void ScoutButton() {
+        StartCoroutine(MenuBarAnimation(2));
+        ChangeScreen(2);
+    }
+
+    public void EditButton() {
+        StartCoroutine(MenuBarAnimation(3));
+        ChangeScreen(3);
     }
 
     public void MaximizeButton()
     {
-        StartCoroutine(MinimizeCycle());
+        StartCoroutine(Cycle());
+    }
+
+    public void ChangeScreen(int screen)
+    {
+        for (var i = 0; i < screens.Length; i++)
+        {
+            screens[i].SetActive(i + 1 == screen);
+        }
     }
     
     private IEnumerator MenuBarAnimation(int position) {
@@ -42,30 +54,20 @@ public class MenuBar : MonoBehaviour
                 menuBarSlider.value -= menuBarSlideSpeed;
                 yield return new WaitForSeconds(menuBarSlideDelay);
             }
-        } else if (menuBarSlider.value < position) {
-            while (menuBarSlider.value < position) {
+        } else if (menuBarSlider.value < position)
+        {
+            while (menuBarSlider.value < position)
+            {
                 menuBarSlider.value += menuBarSlideSpeed;
                 yield return new WaitForSeconds(menuBarSlideDelay);
             }
         }
-
-        for (var i = 0; i < screens.Length; i++)
-        {
-            screens[i].SetActive(i + 1 == position);
-            StartCoroutine(MinimizeNow());
-        }
     }
 
-    private IEnumerator MinimizeCycle()
+    private IEnumerator Cycle()
     {
         anim.Play("Menu Bar Up");
         yield return new WaitForSeconds(5f);
-        StartCoroutine(MinimizeNow());
-    }
-    
-    private IEnumerator MinimizeNow()
-    {
-        yield return new WaitForSeconds(0.2f);
         anim.Play("Menu Bar Down");
     }
 }
